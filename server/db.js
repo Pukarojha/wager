@@ -5,5 +5,11 @@ const db = mysql.createConnection({
   password: "admin",
   database: "wagerdb",
 });
+db.connect(function (err) {
+  if (err) {
+    return console.error("error: " + err.message);
+  }
+  console.log("Connected to MySQL server..");
+});
 
 module.exports = db;

@@ -4,10 +4,21 @@ const app = express();
 const cors = require("cors");
 
 app.use(cors());
+app.use(express.json());
 
-// const userRoute = require("./Routes/User");
-// app.use("/user", userRoute);
+// provide access to images from uploads folder
+app.use("/uploads", express.static("uploads"));
 
-app.listen(3001, () => {
-  console.log("running on port: 3001");
+// routes
+// registration route
+const registration = require("./Routes/Register");
+
+const registerOrganization = require("./Routes/RegisterOrganization");
+
+// all routes
+app.use("/register", registration);
+app.use("/register", registerOrganization);
+
+app.listen(5001, () => {
+  console.log("running on port: 5001");
 });
