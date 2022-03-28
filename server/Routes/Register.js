@@ -44,15 +44,48 @@ const upload = multer({ storage: storage, fileFilter: filefilter });
 // });
 
 router.post("/profile", upload.single("image"), (req, res) => {
-  const { fname, lname, gender, email, address, contact, skills, intrest } =
-    req.body;
+  const {
+    fname,
+    lname,
+    gender,
+    email,
+    address,
+    contact,
+    skills,
+    intrest,
+    password,
+    confirm,
+  } = req.body;
 
   let path = req.file.destination + req.file.filename;
   console.log(path);
-  console.log(fname, lname, gender, email, address, contact, skills, intrest);
+  console.log(
+    fname,
+    lname,
+    gender,
+    email,
+    address,
+    contact,
+    skills,
+    intrest,
+    password,
+    confirm
+  );
   db.query(
-    "INSERT INTO person(fname, lname, gender, address, email, contact, skill, interest, photo) VALUES(?, ?, ?,?,?,?,?,?,?)",
-    [fname, lname, gender, address, email, contact, skills, intrest, path],
+    "INSERT INTO person(fname, lname, gender, address, email, contact, skill, interest, photo,password, confirm) VALUES(?, ?, ?,?,?,?,?,?,?, ?, ?)",
+    [
+      fname,
+      lname,
+      gender,
+      address,
+      email,
+      contact,
+      skills,
+      intrest,
+      path,
+      password,
+      confirm,
+    ],
     (err, result) => {
       if (err) {
         console.log(err);
