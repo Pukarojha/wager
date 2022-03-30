@@ -15,16 +15,18 @@ const registration = require("./Routes/Register");
 
 const registerOrganization = require("./Routes/RegisterOrganization");
 
-const pass = require("./Routes/pass");
+// const pass = require("./Routes/pass");
 const SignIn = require("./Routes/SignIn");
+const Home = require("./Routes/Home");
 
 // const message = require("./Routes/Chat");
 
 // all routes
 app.use("/registers", registration);
 app.use("/register", registerOrganization);
-app.use("/registers", pass);
+// app.use("/registers", pass);
 app.use("/login", SignIn);
+// app.use("/home", Home);
 
 // app.use("/chat", message);
 

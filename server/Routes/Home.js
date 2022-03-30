@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require("../db");
 const app = express();
 
-router.post("/pass", (req, res) => {
+router.post("/welcome", (req, res) => {
   const { password, confirm } = req.body;
 
   // console.log(path);
