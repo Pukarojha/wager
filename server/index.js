@@ -19,16 +19,16 @@ const registerOrganization = require("./Routes/RegisterOrganization");
 const SignIn = require("./Routes/SignIn");
 const Home = require("./Routes/Home");
 
-// const message = require("./Routes/Chat");
+//for chat and messaging
+const chat = require("./Routes/Conversation");
 
 // all routes
 app.use("/registers", registration);
 app.use("/register", registerOrganization);
-// app.use("/registers", pass);
 app.use("/login", SignIn);
-// app.use("/home", Home);
+app.use("/upload", Home);
 
-// app.use("/chat", message);
+// app.use("/chat", chat);
 
 app.listen(5001, () => {
   console.log("running on port: 5001");

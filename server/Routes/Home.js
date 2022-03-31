@@ -40,14 +40,14 @@ const filefilter = (req, file, cb) => {
 const upload = multer({ storage: storage, fileFilter: filefilter });
 
 router.post("/post", upload.single("image"), (req, res) => {
-  const { text, photo, video } = req.body;
+  const { text, image, video } = req.body;
 
-  let path = req.file.destination + req.file.filename;
-  console.log(path);
-  console.log(text, photo, video);
+  // let path = req.file.destination + req.file.filename;
+  // console.log(path);
+  console.log(text, image, video);
   db.query(
     "INSERT INTO content(text,photo, video) VALUES(?, ?, ?)",
-    [text, photo, video],
+    [text, image, video],
     (err, result) => {
       if (err) {
         console.log(err);
