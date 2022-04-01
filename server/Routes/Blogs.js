@@ -39,15 +39,27 @@ const filefilter = (req, file, cb) => {
 
 const upload = multer({ storage: storage, fileFilter: filefilter });
 
-router.post("/post", upload.single("image"), (req, res) => {
-  const { text, image, video } = req.body;
-
-  // let path = req.file.destination + req.file.filename;
-  // console.log(path);
-  console.log(text, image, video);
+router.post("/createBlog", upload.single("image"), (req, res) => {
+  const { text, video, idPerson } = req.body;
+  let path = req.file.destination + req.file.filename;
   db.query(
-    "INSERT INTO content(text,photo, video) VALUES(?, ?, ?)",
-    [text, image, video],
+    "INSERT INTO blog(text,image, video, idPerson) VALUES(?, ?, ?, ?)",
+    [text, path, video, idPerson],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send("Values Inserted sucessfully");
+      }
+    }
+  );
+});
+
+router.post("/create", (req, res) => {
+  const { text, video, idPerson } = req.body;
+  db.query(
+    "INSERT INTO blog(text, image, video, idPerson) VALUES(?, ?, ?, ?)",
+    [text, "", video, idPerson],
     (err, result) => {
       if (err) {
         console.log(err);
