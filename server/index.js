@@ -24,6 +24,8 @@ const chat = require("./Routes/Conversation");
 const rating = require("./Routes/Ratings");
 const blog = require("./Routes/Blogs");
 
+const messenger = require("./Routes/Chat");
+
 // all routes
 app.use("/registers", registration);
 app.use("/register", registerOrganization);
@@ -31,6 +33,7 @@ app.use("/login", SignIn);
 app.use("/upload", Home);
 app.use("/upload", rating);
 app.use("/createBlog", blog);
+// app.use("/messenger", messenger);
 
 // app.use("/chat", chat);
 
