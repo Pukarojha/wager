@@ -17,14 +17,18 @@ const registerOrganization = require("./Routes/RegisterOrganization");
 
 // const pass = require("./Routes/pass");
 const SignIn = require("./Routes/SignIn");
+const Ologin = require("./Routes/OLogin");
 const Home = require("./Routes/Home");
 
 //for chat and messaging
 const chat = require("./Routes/Conversation");
 const rating = require("./Routes/Ratings");
 const blog = require("./Routes/Blogs");
+const message = require("./Routes/Message");
+const friend = require("./Routes/Friends");
 
-const messenger = require("./Routes/Chat");
+// const messenger = require("./Routes/Chat");
+// const request = require("./Routes");
 
 // all routes
 app.use("/registers", registration);
@@ -33,9 +37,13 @@ app.use("/login", SignIn);
 app.use("/upload", Home);
 app.use("/upload", rating);
 app.use("/createBlog", blog);
+app.use("/loggedin", Ologin);
+app.use("/friends", friend);
 // app.use("/messenger", messenger);
 
-// app.use("/chat", chat);
+//pal request
+
+app.use("/chat", message);
 
 app.listen(5001, () => {
   console.log("running on port: 5001");

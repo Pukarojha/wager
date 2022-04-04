@@ -41,8 +41,18 @@ const filefilter = (req, file, cb) => {
 const upload = multer({ storage: storage, fileFilter: filefilter });
 
 router.post("/organization", upload.single("image"), (req, res) => {
-  const { oName, pNum, regNum, oEmail, address, contact, zipCode, postalCode } =
-    req.body;
+  const {
+    oName,
+    pNum,
+    regNum,
+    oEmail,
+    address,
+    contact,
+    zipCode,
+    postalCode,
+    password,
+    confirm,
+  } = req.body;
 
   let path = req.file.destination + req.file.filename;
   console.log(path);
@@ -54,11 +64,25 @@ router.post("/organization", upload.single("image"), (req, res) => {
     address,
     contact,
     zipCode,
-    postalCode
+    postalCode,
+    password,
+    confirm
   );
   db.query(
-    "INSERT INTO organization(oName, pNum, regNum, oEmail, address, contact, zipCode, postalCode, photo) VALUES(?, ?, ?,?,?,?,?,?,?)",
-    [oName, pNum, regNum, oEmail, address, contact, zipCode, postalCode, path],
+    "INSERT INTO organization(oName, pNum, regNum, oEmail, address, contact, zipCode, postalCode, photo,password, confirm) VALUES(?, ?, ?,?,?,?,?,?,?,?,?)",
+    [
+      oName,
+      pNum,
+      regNum,
+      oEmail,
+      address,
+      contact,
+      zipCode,
+      postalCode,
+      path,
+      password,
+      confirm,
+    ],
     (err, result) => {
       if (err) {
         console.log(err);
