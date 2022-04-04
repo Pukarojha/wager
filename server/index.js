@@ -18,6 +18,8 @@ const registerOrganization = require("./Routes/RegisterOrganization");
 // const pass = require("./Routes/pass");
 const SignIn = require("./Routes/SignIn");
 const Ologin = require("./Routes/OLogin");
+const adminLogin = require("./Routes/Alogin");
+
 const Home = require("./Routes/Home");
 
 //for chat and messaging
@@ -38,10 +40,9 @@ app.use("/upload", Home);
 app.use("/upload", rating);
 app.use("/createBlog", blog);
 app.use("/loggedin", Ologin);
-app.use("/friends", friend);
-// app.use("/messenger", messenger);
-
 //pal request
+app.use("/friends", friend);
+app.use("/admin", adminLogin);
 
 app.use("/chat", message);
 
