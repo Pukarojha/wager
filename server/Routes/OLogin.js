@@ -7,9 +7,10 @@ const app = express();
 
 router.post("/organization", async (req, res) => {
   try {
+    console.log(req.body);
     // organization details
     let { email, password } = req.body;
-
+    // console.log(email, password);
     // validation and register
     if (email == "" || password == "") {
       res.json({
@@ -41,6 +42,7 @@ router.post("/organization", async (req, res) => {
               res.json({
                 loggedIn: true,
                 message: "Signin Successful.",
+                user: "Organization",
                 data: result[0],
               });
             } else {

@@ -28,6 +28,9 @@ const rating = require("./Routes/Ratings");
 const blog = require("./Routes/Blogs");
 const message = require("./Routes/Message");
 const friend = require("./Routes/Friends");
+const orgFriend = require("./Routes/OrgFriends");
+const jobPost = require("./Routes/PostJob");
+const freelancePost = require("./Routes/PostFreelance");
 
 // const messenger = require("./Routes/Chat");
 // const request = require("./Routes");
@@ -42,6 +45,9 @@ app.use("/createBlog", blog);
 app.use("/loggedin", Ologin);
 //pal request
 app.use("/friends", friend);
+app.use("/orgFriends", orgFriend);
+app.use("/jobpost", jobPost);
+app.use("/freelancepost", freelancePost);
 app.use("/admin", adminLogin);
 
 app.use("/chat", message);

@@ -1,8 +1,5 @@
-const io = require("socket.io")(8900, {
-  cors: {
-    origin: "http://localhost:5001/chat",
-  },
-});
+const http = require("http").createServer(app);
+const io = require("socket.io")(http);
 
 io.on("connection", (socket) => {
   console.log("a user connected.");

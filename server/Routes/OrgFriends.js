@@ -2,10 +2,11 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
+// get for person
 router.post("/get_connect_list_person", (req, res) => {
   const { idPerson } = req.body;
   db.query(
-    "SELECT idPerson, CONCAT(fName,' ',lname) AS name, photo FROM person WHERE idPerson<>? AND idPerson NOT IN (SELECT idFollowing FROM follow WHERE typeFollower='Person' AND typeFollowing='Person' AND idFollower=?)",
+    "SELECT idPerson, CONCAT(fName,' ',lname) AS name, photo FROM person WHERE idPerson<>? AND idPerson NOT IN (SELECT idFollowing FROM follow WHERE typeFollowing='Person')",
     [idPerson, idPerson],
     (err, result) => {
       if (err) {
@@ -20,11 +21,11 @@ router.post("/get_connect_list_person", (req, res) => {
   );
 });
 
+// get for person
 router.post("/get_connect_list_organization", (req, res) => {
   const { idPerson } = req.body;
   db.query(
-    "SELECT idOrganization, oName, photo FROM organization where idOrganization NOT IN (SELECT idFollowing FROM follow WHERE typeFollower='Person' AND idFollower=? AND typeFollowing='Organization')",
-    [idPerson],
+    "SELECT idOrganization, oName, photo FROM organization",
     (err, result) => {
       if (err) {
         console.log(err);
@@ -37,7 +38,11 @@ router.post("/get_connect_list_organization", (req, res) => {
     }
   );
 });
+// get for org
 
+// get for org
+
+// follow person
 router.post("/person_following", (req, res) => {
   console.log(req.body);
   const { idPerson, followerType, idFollowing, followingType } = req.body;
@@ -53,7 +58,7 @@ router.post("/person_following", (req, res) => {
     }
   );
 });
-
+// follow organization
 router.post("/organization_following", (req, res) => {
   console.log(req.body);
   const { idPerson, followerType, idFollowing, followingType } = req.body;
