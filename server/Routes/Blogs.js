@@ -70,4 +70,22 @@ router.post("/create", (req, res) => {
   );
 });
 
+router.post("/get_blog_list", (req, res) => {
+  const { idPerson } = req.body;
+  db.query(
+    "SELECT person.idPerson, CONCAT(person.fName,' ',person.lname) AS name, person.photo, blog.text, blog.image from person join blog on person.idPerson = blog.idPerson;",
+
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send({
+          status: "SUCCESS",
+          data: result,
+        });
+      }
+    }
+  );
+});
+
 module.exports = router;

@@ -26,16 +26,14 @@ const Home = require("./Routes/Home");
 const chat = require("./Routes/Conversation");
 const rating = require("./Routes/Ratings");
 const blog = require("./Routes/Blogs");
-const message = require("./Routes/Message");
+// const message = require("./Routes/Message");
 const friend = require("./Routes/Friends");
 const orgFriend = require("./Routes/OrgFriends");
 const jobPost = require("./Routes/PostJob");
 const freelancePost = require("./Routes/PostFreelance");
 
-// const messenger = require("./Routes/Chat");
-// const request = require("./Routes");
-
 // all routes
+app.use("/chat", chat);
 app.use("/registers", registration);
 app.use("/register", registerOrganization);
 app.use("/login", SignIn);
@@ -49,8 +47,6 @@ app.use("/orgFriends", orgFriend);
 app.use("/jobpost", jobPost);
 app.use("/freelancepost", freelancePost);
 app.use("/admin", adminLogin);
-
-app.use("/chat", message);
 
 app.listen(5001, () => {
   console.log("running on port: 5001");
