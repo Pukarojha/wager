@@ -41,6 +41,8 @@ router.post("/get_connect_list_organization", (req, res) => {
 router.post("/person_following", (req, res) => {
   console.log(req.body);
   const { idPerson, followerType, idFollowing, followingType } = req.body;
+  const message = `Let's chat!`;
+  const date = Date.now().toString();
   db.query(
     "INSERT INTO follow(idFollower, idFollowing, typeFollower, typeFollowing) VALUES (?,?,?,?)",
     [idPerson, idFollowing, followerType, followingType],
@@ -48,7 +50,17 @@ router.post("/person_following", (req, res) => {
       if (err) {
         console.log(err);
       } else {
-        res.send("Values Inserted sucessfully");
+        db.query(
+          `INSERT INTO chat(senderId, reciverId, date, message, reciverType, senderType) VALUES(?,?,?,?,?,?)`,
+          [idPerson, idFollowing, date, message, followingType, followerType],
+          (err, output) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send("Values Inserted sucessfully");
+            }
+          }
+        );
       }
     }
   );
@@ -57,6 +69,8 @@ router.post("/person_following", (req, res) => {
 router.post("/organization_following", (req, res) => {
   console.log(req.body);
   const { idPerson, followerType, idFollowing, followingType } = req.body;
+  const message = `Let's chat!`;
+  const date = Date.now().toString();
   db.query(
     "INSERT INTO follow(idFollower, idFollowing, typeFollower, typeFollowing) VALUES (?,?,?,?)",
     [idPerson, idFollowing, followerType, followingType],
@@ -64,7 +78,17 @@ router.post("/organization_following", (req, res) => {
       if (err) {
         console.log(err);
       } else {
-        res.send("Values Inserted sucessfully");
+        db.query(
+          `INSERT INTO chat(senderId, reciverId, date, message, reciverType, senderType) VALUES(?,?,?,?,?,?)`,
+          [idPerson, idFollowing, date, message, followingType, followerType],
+          (err, output) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send("Values Inserted sucessfully");
+            }
+          }
+        );
       }
     }
   );
