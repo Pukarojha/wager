@@ -44,53 +44,76 @@ const upload = multer({ storage: storage, fileFilter: filefilter });
 // });
 
 router.post("/profile", upload.single("image"), (req, res) => {
-  const {
-    fname,
-    lname,
-    gender,
-    email,
-    address,
-    contact,
-    skills,
-    intrest,
-    password,
-    confirm,
-  } = req.body;
-
-  let path = req.file.destination + req.file.filename;
-  console.log(path);
-  console.log(
-    fname,
-    lname,
-    gender,
-    email,
-    address,
-    contact,
-    skills,
-    intrest,
-    password,
-    confirm
-  );
-  db.query(
-    "INSERT INTO person(fname, lname, gender, address, email, contact, skill, interest, photo,password, confirm) VALUES(?, ?, ?,?,?,?,?,?,?, ?, ?)",
-    [
+  try {
+    console.log(req.file);
+    const {
       fname,
       lname,
       gender,
-      address,
       email,
+      address,
       contact,
       skills,
       intrest,
-      path,
       password,
       confirm,
-    ],
+    } = req.body;
+
+    let path = req.file.destination + req.file.filename;
+    console.log(path);
+    console.log(
+      fname,
+      lname,
+      gender,
+      email,
+      address,
+      contact,
+      skills,
+      intrest,
+      password,
+      confirm
+    );
+    db.query(
+      "INSERT INTO person(fname, lname, gender, address, email, contact, skill, interest, photo,password, confirm) VALUES(?, ?, ?,?,?,?,?,?,?, ?, ?)",
+      [
+        fname,
+        lname,
+        gender,
+        address,
+        email,
+        contact,
+        skills,
+        intrest,
+        path,
+        password,
+        confirm,
+      ],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send("Values Inserted sucessfully");
+        }
+      }
+    );
+  } catch (err) {
+    console.log({ error: err });
+  }
+});
+
+router.post("/experience", (req, res) => {
+  // const { idPerson, description, createdDate } = req.body;
+  const { idUser, text } = req.body;
+  const createdDate = Date.now();
+  console.log(req.body);
+  db.query(
+    "INSERT INTO experience(idPerson,description,createdDate) VALUES(?, ?, ?)",
+    [idUser, text, createdDate],
     (err, result) => {
       if (err) {
         console.log(err);
       } else {
-        res.send("Values Inserted sucessfully");
+        res.send("Values added sucessfully!");
       }
     }
   );

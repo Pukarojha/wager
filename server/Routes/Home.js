@@ -52,7 +52,10 @@ router.post("/post", upload.single("image"), (req, res) => {
       if (err) {
         console.log(err);
       } else {
-        res.send("Values Inserted sucessfully");
+        // res.send("Values Inserted sucessfully");
+        res.send({
+          result: result,
+        });
       }
     }
   );

@@ -43,21 +43,33 @@ const upload = multer({ storage: storage, fileFilter: filefilter });
 //   res.send({ data: "This is the data" });
 // });
 
-router.post("/post", upload.single("image"), (req, res) => {
-  const { role, skill, experience, text, image, video, idPerson } = req.body;
-  console.log(role, skill, experience, text, video, idPerson);
+// router.post("/post", upload.single("image"), (req, res) => {
+router.post("/post", (req, res) => {
+  const { role, skill, experience, text, idPerson, userType } = req.body;
 
-  let path = req.file.destination + req.file.filename;
-  console.log(path);
-  console.log(role, skill, experience, text, image, video, idPerson);
   db.query(
-    "INSERT INTO job(roles, skills, experience, text, image, video, idPerson) VALUES(?, ?, ?,?,?,?,?)",
-    [role, skill, experience, text, path, video, idPerson],
+    "INSERT INTO work(roles, skill, experience, description, idUser, userType) VALUES(?,?,?,?,?,?)",
+    [role, skill, experience, text, idPerson, userType],
     (err, result) => {
       if (err) {
         console.log(err);
       } else {
-        res.send("Values Inserted sucessfully");
+        // res.send("Values Inserted sucessfully");
+        let userID = 0;
+        let userType = "Person";
+        let description = "New work has been posted";
+        let createdDate = Date.now().toString();
+        db.query(
+          `INSERT INTO notification (idUser, userType, description, createdDate) values (?,?,?,?)`,
+          [userID, userType, description, createdDate],
+          (err, output) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send("Values Inserted sucessfully");
+            }
+          }
+        );
       }
     }
   );

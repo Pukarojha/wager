@@ -3,6 +3,8 @@ const router = express.Router();
 const db = require("../db");
 const session = require("express-session");
 
+// const jwt = require("jsonwebtoken");
+
 const app = express();
 
 router.post("/person", async (req, res) => {

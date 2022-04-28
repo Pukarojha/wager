@@ -89,4 +89,167 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.get("/managePerson", (err, res) => {
+  db.query(
+    `select idPerson, concat(person.fName,' ', person.lname) as name, gender, address, email, contact, skill, interest, photo, password, confirm from person`,
+    (err, data) => {
+      if (err) {
+        console.log(err);
+      } else {
+        // console.log(data);
+        res.send({
+          data: data,
+        });
+      }
+    }
+  );
+});
+
+router.get("/manageOrganization", (err, res) => {
+  db.query(
+    `Select idOrganization, oName as name, pNum, regNum, oEmail as email, address, contact, zipCode, postalCode, photo, password, confirm from organization`,
+    (err, data) => {
+      if (err) {
+        console.log(err);
+      } else {
+        // console.log(data);
+        res.send({
+          data: data,
+        });
+      }
+    }
+  );
+});
+
+router.get("/chartData", (req, res) => {
+  try {
+    let data = [
+      { name: "Person", TotalPerson: 0 },
+      { name: "Organiation", TotalOrganization: 0 },
+    ];
+    db.query(
+      `Select count(person.idPerson) as TotalPerson from person`,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          data[0].TotalPerson = result[0].TotalPerson;
+          db.query(
+            `Select count(organization.idOrganization) as TotalOrganization from organization`,
+            (err, result) => {
+              if (err) {
+                console.log(err);
+              } else {
+                data[1].TotalOrganization = result[0].TotalOrganization;
+                res.json({
+                  data: data,
+                });
+              }
+            }
+          );
+        }
+      }
+    );
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.post("/viewPerson", (req, res) => {
+  try {
+    const { idUser } = req.body;
+    db.query(
+      `select idPerson, person.fName, person.lname,  concat(person.fName,' ', person.lname) as name, gender, address, email, contact, skill, interest, photo, password, confirm from person where idPerson=?`,
+      [idUser],
+      (err, data) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.json({
+            data: data[0],
+          });
+        }
+      }
+    );
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.post("/viewOrg", (req, res) => {
+  try {
+    const { idUser } = req.body;
+    db.query(
+      `select idOrganization, organization.oName as name, pNum, regNum, oEmail as email, contact, address, zipCode, photo, postalCode,password,  confirm from organization where idOrganization=?`,
+      [idUser],
+      (err, data) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.json({
+            data: data[0],
+          });
+        }
+      }
+    );
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.post("/editProfile", (req, res) => {
+  try {
+    const {
+      idUser,
+      fname,
+      lname,
+      gender,
+      address,
+      email,
+      contact,
+      skills,
+      interest,
+    } = req.body;
+    console.log(req.body);
+    db.query(
+      `Update person SET fName=?, lName=?,  gender=?, address=?, email=?, contact=?, skill=?, interest=? where idPerson=? `,
+      [fname, lname, gender, address, email, contact, skills, interest, idUser],
+      (err, result) => {
+        if (err) {
+          // console.log(err);
+          res.json({
+            status: "FAILED",
+            message: "An error occured while updating",
+          });
+        } else {
+          res.json({
+            // data: data[0],
+            status: "SUCCESS",
+            message: "Updated sucessfully!",
+          });
+          // res.send("Sucessful!");
+          console.log("Sucessful");
+        }
+      }
+    );
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.post("/deleteProfile", (req, res) => {
+  const idPerson = req.body;
+  try {
+    db.query(`Delete * from person where ?`, [idPerson], (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Deleted Sucessfully");
+      }
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 module.exports = router;

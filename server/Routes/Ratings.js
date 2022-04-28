@@ -3,11 +3,12 @@ const router = express.Router();
 const db = require("../db");
 
 router.post("/rating", (req, res) => {
-  const { text, rating, idPerson } = req.body;
-  console.log(text, rating, idPerson);
+  const { idRater, raterType, idUser, text, ratings, userType } = req.body;
+  // console.log(idRater, raterType, idUser, text, ratings, userType);
+  console.log(req.body);
   db.query(
-    "INSERT INTO personrating(text ,rating, idPerson) VALUES(?, ?, ?)",
-    [text, rating, idPerson],
+    "INSERT INTO ratings(idUser ,idRater, text,rating, userType, raterType) VALUES(?, ?, ?,?,?,?)",
+    [idUser, idRater, text, ratings, userType, raterType],
     (err, result) => {
       if (err) {
         console.log(err);
